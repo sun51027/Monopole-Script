@@ -229,7 +229,8 @@ private:
   static const int MONO_PID = MONOID;
   
   //Tracker 
-  MplTracker *_Tracker;
+//Test for time loading
+  //MplTracker *_Tracker;
   
   // TFileService
   //edm::Service<TFileService> m_fs;
@@ -586,7 +587,7 @@ MonoNtupleDumper::MonoNtupleDumper(const edm::ParameterSet& iConfig)
   ,m_ecalObs(iConfig)
 {
   m_isFirstEvent = true;
-  _Tracker         = new MplTracker(iConfig,consumesCollector());
+  //_Tracker         = new MplTracker(iConfig,consumesCollector());
   _ClustHitOutput  = iConfig.getUntrackedParameter<bool>("ClustHitOutput", true);
   _EleJetPhoOutput = iConfig.getUntrackedParameter<bool>("EleJetPhoOutput", true);
 }
@@ -766,9 +767,8 @@ void MonoNtupleDumper::analyze(const edm::Event& iEvent, const edm::EventSetup& 
 
 #ifdef DEBUG
   std::cout<<"Pass: Mono::GenMonoClusterTagger"<<std::endl;
-#endif
-
-  // get RecHit collection
+#endif 
+/*  // get RecHit collection
   Handle<EBRecHitCollection > ecalRecHits;
   iEvent.getByToken(m_TagEcalEB_RecHits,ecalRecHits);
   assert( ecalRecHits->size() > 0 );
@@ -798,7 +798,7 @@ void MonoNtupleDumper::analyze(const edm::Event& iEvent, const edm::EventSetup& 
   //SimpleCaloRecHitMetaCollection< HBHERecHitCollection > mhbrh(hbRecHits.product());
   EgammaHcalIsolation egIso(0.4,0.1,10.,10.,10.,10.,calo,*hbRecHits);
 
-  /* Comment to test */
+//  Comment to test 
   // fill RecHit branches
   EBRecHitCollection::const_iterator itHit = ecalRecHits->begin();
   for ( ; itHit != ecalRecHits->end(); itHit++ ) {
@@ -823,7 +823,7 @@ void MonoNtupleDumper::analyze(const edm::Event& iEvent, const edm::EventSetup& 
     m_ehit_flag.push_back( (*itHit).recoFlag() );
 
   }
-  //*/
+  
 
   // get BasicCluster Collection
   Handle<BasicClusterCollection> bClusters;
@@ -1085,19 +1085,19 @@ void MonoNtupleDumper::analyze(const edm::Event& iEvent, const edm::EventSetup& 
   
 #ifdef DEBUG
   std::cout<<"Pass: Mono::GenMonoClusterTagger"<<std::endl;
-#endif 
+#endif
 
   ////////////////////////////////
   // Tracking analysis
-  _Tracker->analyze(iEvent,iSetup);
+//  _Tracker->analyze(iEvent,iSetup);
   //  const Mono::MonoEcalCluster * clusters = clusterBuilder.clusters(); //comment if error
   //_Tracker->doMatch(m_nClusters,clusters,ebMap); //comment if error 
-  _Tracker->doMatch(m_nCombEgamma,&ebClusters[0],fEBCombined);
-  _Tracker->doMatch(m_nCleanEgamma,&ebCleanClusters[0],fEBClean);
-  _Tracker->doMatch(m_nClusterEgamma,&ebUncleanClusters[0],fEBUnclean);
-  _Tracker->doMatch(m_nCombEE,&eeCombClusters[0],fEECombined);
-  _Tracker->doMatch(m_nCleanEE,&eeCleanClusters[0],fEEClean);
-  _Tracker->doMatch(m_nUncleanEE,&eeUncleanClusters[0],fEEUnclean);
+//  _Tracker->doMatch(m_nCombEgamma,&ebClusters[0],fEBCombined);
+//  _Tracker->doMatch(m_nCleanEgamma,&ebCleanClusters[0],fEBClean);
+//  _Tracker->doMatch(m_nClusterEgamma,&ebUncleanClusters[0],fEBUnclean);
+//  _Tracker->doMatch(m_nCombEE,&eeCombClusters[0],fEECombined);
+//  _Tracker->doMatch(m_nCleanEE,&eeCleanClusters[0],fEEClean);
+//  _Tracker->doMatch(m_nUncleanEE,&eeUncleanClusters[0],fEEUnclean);
   
 #ifdef DEBUG
   std::cout<<"Pass: Tracker"<<std::endl;
@@ -1295,7 +1295,7 @@ void MonoNtupleDumper::analyze(const edm::Event& iEvent, const edm::EventSetup& 
 	}
       }
   }
-  
+  */
   //////////////////////////////////////////////////////////
   // Perform track to cluster matching and form monopole candidates
   //
@@ -1315,7 +1315,7 @@ MonoNtupleDumper::beginJob()
   //m_avgDir = new TFileDirectory( m_fs->mkdir("avgClusterMaps"));
 
   m_tree = new TTree("monopoles","Monopole Variables");
-
+/*
   m_tree->Branch("run",&m_run,"run/i");
   m_tree->Branch("lumiBlock",&m_lumi,"lumiBlock/i");
   m_tree->Branch("event",&m_event,"evnet/i");
@@ -1361,7 +1361,7 @@ MonoNtupleDumper::beginJob()
   m_tree->Branch("cand_phi",&m_candPhi);
   m_tree->Branch("cand_pho175TrigCode",&m_candPho175TrigCode);
   m_tree->Branch("cand_pho200TrigCode",&m_candPho200TrigCode);
-/*  
+  
   m_tree->Branch("clust_N",&m_nClusters,"clust_N/i");
   m_tree->Branch("clust_E",&m_clust_E);
   m_tree->Branch("clust_eta",&m_clust_eta);
@@ -1488,8 +1488,8 @@ MonoNtupleDumper::beginJob()
    m_tree->Branch("ehit_kDiWeird",&m_ehit_kDiWeird);
    m_tree->Branch("ehit_flag",&m_ehit_flag);
    }
-*/
-  _Tracker->beginJob(m_tree);
+
+  //_Tracker->beginJob(m_tree);
   
    if(_EleJetPhoOutput){
   m_tree->Branch("jet_N",&m_jet_N,"jet_N/i");
@@ -1545,7 +1545,6 @@ MonoNtupleDumper::beginJob()
   m_tree->Branch("CaloMET_phi",&m_CaloMETPhi,"CaloMET_phi/D");
 
 
-
  
   if ( !m_isData ) {
     m_tree->Branch("mono_p", &m_mono_p, "mono_p/D");
@@ -1576,6 +1575,7 @@ MonoNtupleDumper::beginJob()
     m_tree->Branch("amonExp_eta",&m_amonExp_eta, "amonExp_eta/D");
     m_tree->Branch("amonExp_phi",&m_amonExp_phi, "amonExp_phi/D");
   } 
+*/
 }
 
 // ------------ method called once each job just after ending the event loop  ------------
@@ -1592,7 +1592,7 @@ MonoNtupleDumper::endJob()
     i->second->Write();
   }
   
-  _Tracker->endJob();
+  //_Tracker->endJob();
 
   m_outputFile->Close();
 }
@@ -1846,11 +1846,13 @@ void MonoNtupleDumper::rematch()
 
   // Get a handle on the monopole tracks
   std::vector<Mono::MonoTrack> tracks;
-  _Tracker->getTracks(tracks);
+//  _Tracker->getTracks(tracks);
 
+/*test for time loading
   const std::vector<int> & subHits = _Tracker->getSubHits();
   const std::vector<int> & satSubHits = _Tracker->getSatSubHits();
   const std::vector<float> & tIso = _Tracker->getTIso();
+
   const std::vector<float> & nDof = _Tracker->getNdof();
 
   const unsigned nTracks = tracks.size();
@@ -1913,21 +1915,21 @@ void MonoNtupleDumper::rematch()
     if ( matchEB == -1 && matchEE == -1 ) continue;
 
     // calculate dE/dX significance
-    const double dEdXSig = sqrt(-TMath::Log(TMath::BinomialI(0.07, subHits[i], satSubHits[i])));
+    //const double dEdXSig = sqrt(-TMath::Log(TMath::BinomialI(0.07, subHits[i], satSubHits[i])));
  
     /////////////////////////////////////////
     // assign values to branches
     m_nCandidates++;
-    m_candSubHits.push_back( subHits[i] );
-    m_candSatSubHits.push_back( satSubHits[i] );
-    m_canddEdXSig.push_back( dEdXSig );
-    m_candTIso.push_back( tIso[i] );
-    m_candXYPar0.push_back( tr.xyp0() );
-    m_candXYPar1.push_back( tr.xyp1() );
-    m_candXYPar2.push_back( tr.xyp2() );
-    m_candRZPar0.push_back( tr.rzp0() );
-    m_candRZPar1.push_back( tr.rzp1() );
-    m_candRZPar2.push_back( tr.rzp2() );
+//    m_candSubHits.push_back( subHits[i] );
+//    m_candSatSubHits.push_back( satSubHits[i] );
+//    m_canddEdXSig.push_back( dEdXSig );
+//    m_candTIso.push_back( tIso[i] );
+//    m_candXYPar0.push_back( tr.xyp0() );
+//    m_candXYPar1.push_back( tr.xyp1() );
+//    m_candXYPar2.push_back( tr.xyp2() );
+//    m_candRZPar0.push_back( tr.rzp0() );
+//    m_candRZPar1.push_back( tr.rzp1() );
+//    m_candRZPar2.push_back( tr.rzp2() );
 
     if ( distEB < distEE ) {
       m_candDist.push_back( distEB );
@@ -1952,7 +1954,7 @@ void MonoNtupleDumper::rematch()
       m_candPho200TrigCode.push_back (getPho200TrigCode(m_eeComb_eta[matchEE] , m_eeComb_phi[matchEE] , *m_trigEventHandle ) );
     }
 
- }
+ }*/
 }
 
 
