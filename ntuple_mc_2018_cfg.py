@@ -1,10 +1,37 @@
+### Lin added 'options' August 2021
+##
+##	One can decide the input file name, output file name, max events by'options'
+##	ex. input a single file:
+##	cmsRun ntuple.py inputFiles=file:YourInputFile.root maxEvents=15k outputFile=YourOutputName.root 
+##	ex. input mutiple files:
+##	cmsRun ntuple.py inputFiles_load=YourInputFileList.txt maxEvents=15k outputFile=YourOutputName.root
+##	Note that if your inputfile is not official(from DAS), you have to type 'file:'before your inputfile
+
 import FWCore.ParameterSet.Config as cms
 
-process = cms.Process("Mpl")
+### 'options functions' 
+from FWCore.ParameterSet.VarParsing import VarParsing
+options = VarParsing ('analysis')
+options.register ('eventsToProcess',
+				  '',
+				  VarParsing.multiplicity.list,
+				  VarParsing.varType.string,
+				  "Events to process")
+options.register ('maxSize',
+				  0,
+				  VarParsing.multiplicity.singleton,
+				  VarParsing.varType.int,
+				  "Maximum (suggested) file size (in Kb)")
+options.parseArguments()
 
+
+
+process = cms.Process("Mpl")
+print("pass Mpl")
 ### standard MessageLoggerConfiguration
 process.load("FWCore.MessageService.MessageLogger_cfi")
 
+print("pass MessageLoggerConfiguration")
 ### Standard Configurations
 process.load('Configuration.StandardSequences.Services_cff')
 process.load('SimGeneral.HepPDTESSource.pythiapdt_cfi')
@@ -20,19 +47,21 @@ process.load('CommonTools.ParticleFlow.EITopPAG_cff')
 process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
-## Fitter-smoother: loosen outlier rejection as for first data-taking with LHC "collisions"
+print("pass Standard Configurations")
+# Fitter-smoother: loosen outlier rejection as for first data-taking with LHC "collisions"
+
 process.KFFittingSmootherWithOutliersRejectionAndRK.BreakTrajWith2ConsecutiveMissing = False
 process.KFFittingSmootherWithOutliersRejectionAndRK.EstimateCut = 1000
-
-### Conditions
+print("pass Fitter-smoother")
+## Conditions
 from Configuration.AlCa.GlobalTag import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, '106X_upgrade2018_realistic_v16_L1v1', '')
-
-### Track refitter specific stuff
-#from RecoTracker.TrackProducer.TrackRefitters_cff import *
+print("pass GlobalTag")
+## Track refitter specific stuff
+from RecoTracker.TrackProducer.TrackRefitters_cff import *
 process.load("RecoTracker.TrackProducer.TrackRefitters_cff")
 process.load("RecoTracker.MeasurementDet.MeasurementTrackerEventProducer_cfi")
-
+print("passTrack refitter specific stuff")
 ### unclean EE
 process.uncleanEERecovered = cms.EDProducer(
     'UncleanSCRecoveryProducer',
@@ -46,112 +75,33 @@ process.uncleanEERecovered = cms.EDProducer(
     bcCollection = cms.string('uncleanEndcapBasicClusters'),
     scCollection = cms.string('uncleanEndcapSuperClusters'),
 )
-
+print("pass uncleanEERecovered")
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(18000)
+   # input = cms.untracked.int32(-1)
+    input = cms.untracked.int32(options.maxEvents)
 )
-
+print("pass maxEvents")
 process.source = cms.Source(
     "PoolSource",
-    fileNames = cms.untracked.vstring(
-	
- #	'file:~/OldestTest/CMSSW_10_6_8_patch1/src/RECO.root'
-#	'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-1000/RECO_2018_1000_1.root',
-#        'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-1000/RECO_2018_1000_2.root', 
-#        'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-1000/RECO_2018_1000_3.root', 
-       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-1000/RECO_2018_1000_4.root'
-#       #'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-1000/RECO_2018_1000_5.root', 
-#       #'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-1000/RECO_2018_1000_6.root', 
-#        'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-1000/RECO_2018_1000_7.root', 
-#        'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-1000/RECO_2018_1000_8.root', 
-#       #'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-1000/RECO_2018_1000_9.root', 
-#        'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-1000/RECO_2018_1000_10.root'
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-1000/RECO_2018_1000_11.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-1000/RECO_2018_1000_12.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-1000/RECO_2018_1000_13.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-1000/RECO_2018_1000_14.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-1000/RECO_2018_1000_15.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-1000/RECO_2018_1000_16.root',
-#       #'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-1000/RECO_2018_1000_17.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-1000/RECO_2018_1000_18.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-1000/RECO_2018_1000_19.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-1000/RECO_2018_1000_20.root',
-#       #'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-1000/RECO_2018_1000_21.root',
-#       #'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-1000/RECO_2018_1000_22.root',
-#       #'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-1000/RECO_2018_1000_23.root',
-#       #'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-1000/RECO_2018_1000_24.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-1000/RECO_2018_1000_25.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-1000/RECO_2018_1000_26.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-1000/RECO_2018_1000_27.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-1000/RECO_2018_1000_28.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-1000/RECO_2018_1000_29.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-1000/RECO_2018_1000_30.root',
-#       #'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-1000/RECO_2018_1000_31.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-1000/RECO_2018_1000_40.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-1000/RECO_2018_1000_34.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-1000/RECO_2018_1000_35.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-1000/RECO_2018_1000_36.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-1000/RECO_2018_1000_37.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-1000/RECO_2018_1000_38.root'
-
-	# 2000
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_1.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_2.root', 
-##       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_3.root', 
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_4.root', 
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_5.root', 
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_6.root', 
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_7.root', 
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_8.root', 
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_9.root', 
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_10.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_11.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_12.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_13.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_14.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_15.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_16.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_17.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_18.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_19.root',
-##       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_20.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_21.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_22.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_23.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_24.root',
-##       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_25.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_26.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_27.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_28.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_29.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_30.root',
-# #      'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_31.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_32.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_33.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_34.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_35.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_36.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_37.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_38.root',
-#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-2000/RECO_2018_2000_39.root',
-#    #   'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO/2018-3000/RECO_2018_3000_40.root'
-   ),
+    fileNames = cms.untracked.vstring( options.inputFiles),
+    #fileNames = cms.untracked.vstring('file:RECO.root'),
     duplicateCheckMode = cms.untracked.string('checkEachRealDataFile') 
 )
-
+print("pass source")
 ### Construct combined (clean and uncleanOnly Ecal clusters)
 process.load("RecoEcal.EgammaClusterProducers.uncleanSCRecovery_cfi")
-
+print("pass Construct combined ")
 import FWCore.PythonUtilities.LumiList as LumiList
 import FWCore.ParameterSet.Types as CfgTypes
-
+print("pass FWCore.ParameterSet.Types as CfgTypes")
 process.Monopoler = cms.EDAnalyzer(
     'MonoNtupleDumper'
     ,isData = cms.bool(False)
-    ,Output = cms.string("/eos/user/l/lshih/MonoNtuple2018_MC_1000_brokentest.root")
+#    ,Output = cms.string("MonoNtuple2018_MC_1000.root")
+    ,Output = cms.string(options.outputFile)
     ,TriggerResults = cms.InputTag("TriggerResults","","HLT")
     ,TriggerEvent = cms.InputTag("hltTriggerSummaryAOD","","HLT")
-    ,GeneratorTag = cms.InputTag("generatorSmeared","")
+    ,GeneratorTag = cms.InputTag("genParticles","")
     ,PrimaryVertices = cms.InputTag("offlinePrimaryVertices","")                                 
     ,EcalEBRecHits = cms.InputTag("ecalRecHit","EcalRecHitsEB") 
     ,EcalEERecHits = cms.InputTag("ecalRecHit","EcalRecHitsEE") 
@@ -159,6 +109,7 @@ process.Monopoler = cms.EDAnalyzer(
     ,JetTag = cms.InputTag("ak4PFJets","")
     ,ElectronTag = cms.InputTag("gedGsfElectrons","")
     ,PhotonTag = cms.InputTag("photons","")
+    ,PFTag = cms.InputTag("particleFlow","")
     ,METTag = cms.InputTag("pfMet","")
     ,GenMETTag = cms.InputTag("genMetTrue","")
     ,CaloMETTag = cms.InputTag("caloMet","")
@@ -180,24 +131,24 @@ process.Monopoler = cms.EDAnalyzer(
     ,TrackErrorFudge=cms.untracked.double(0.02)
     ,TrackHitOutput=cms.untracked.bool(True)
 )
-
+print("pass Monopoler")
 process.ecalCombine_step = cms.Path(process.uncleanSCRecovered)
 process.ecalCombineEE_step = cms.Path(process.uncleanEERecovered)
 #process.refit_step = cms.Path(process.TrackRefitter)
 process.refit_step = cms.Path(process.MeasurementTrackerEvent * process.TrackRefitter)
 process.mpl_step = cms.Path(process.Monopoler)
-
+print("pass steps")
 process.options = cms.untracked.PSet(wantSummary = cms.untracked.bool(True))
-
-process.load("FWCore.MessageService.MessageLogger_cfi")
 process.MessageLogger.suppressWarning.append("Monopoler")
-
+process.load("FWCore.MessageService.MessageLogger_cfi")
+print("MessageLogge")
 process.p1 = cms.Schedule(
     process.ecalCombine_step
     ,process.ecalCombineEE_step
     ,process.refit_step
     ,process.mpl_step
 )
+print("pass cms Schedule and end of the run")
 #process.outpath = cms.EndPath(process.TRACKS)
 
 #process.load("JetMETCorrections.Configuration.L2L3Corrections_Summer08_cff")
