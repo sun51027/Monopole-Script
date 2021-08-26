@@ -1,9 +1,9 @@
 universe = vanilla
-Executable = submit.sh
-+JobFlavour="workday"
+Executable = /afs/cern.ch/user/l/lshih/CMSSW_10_6_23/src/submit.sh
++JobFlavour="espresso"
 when_to_transfer_output = ON_EXIT
-transfer_input_files = ntuple_mc_2018_cfg.py, submit.sh, remoteFileList.txt
-transfer_output_files = MonoNtuple2018_MC_4000_0804_$(Process).root
+transfer_input_files = /afs/cern.ch/user/l/lshih/CMSSW_10_6_23/src/ntuple_mc_2018_cfg.py, /afs/cern.ch/user/l/lshih/CMSSW_10_6_23/src/submit.sh
+transfer_output_files = MonoNtuple2018_MC_3000_$(Process).root
 Output =/afs/cern.ch/user/l/lshih/CMSSW_10_6_23/src/condor/output/log_job_$(Process)
 Error  =/afs/cern.ch/user/l/lshih/CMSSW_10_6_23/src/condor/errors/log_job_$(Process)
 Log    =/afs/cern.ch/user/l/lshih/CMSSW_10_6_23/src/condor/stdout/log_job_$(Process)
