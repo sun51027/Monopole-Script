@@ -1,12 +1,9 @@
 ### Lin added 'options' August 2021
 ##
 ##	One can decide the input file name, output file name, max events by'options'
-##	ex. input a single file:
-##	cmsRun ntuple.py inputFiles=file:YourInputFile.root maxEvents=15k outputFile=YourOutputName.root 
-##	ex. input mutiple files:
-##	cmsRun ntuple.py inputFiles_load=YourInputFileList.txt maxEvents=15k outputFile=YourOutputName.root
-##	Note that if your inputfile is not official(from DAS), you have to type 'file:'before your inputfile
-
+##	command:
+##	cmsRun ntuple.py inputFiles=file:YourInputFile.root maxEvents=-1 outputFile=YourOutputName.root 
+##
 import FWCore.ParameterSet.Config as cms
 
 ### 'options functions' 
@@ -77,8 +74,8 @@ process.uncleanEERecovered = cms.EDProducer(
 )
 print("pass uncleanEERecovered")
 process.maxEvents = cms.untracked.PSet(
-   # input = cms.untracked.int32(-1)
-    input = cms.untracked.int32(options.maxEvents)
+    input = cms.untracked.int32(-1)
+    #input = cms.untracked.int32(options.maxEvents)
 )
 print("pass maxEvents")
 process.source = cms.Source(
@@ -97,8 +94,8 @@ print("pass FWCore.ParameterSet.Types as CfgTypes")
 process.Monopoler = cms.EDAnalyzer(
     'MonoNtupleDumper'
     ,isData = cms.bool(False)
-#    ,Output = cms.string("MonoNtuple2018_MC_1000.root")
-    ,Output = cms.string(options.outputFile)
+    ,Output = cms.string("MonoNtuple2018_MC_3000.root")
+    #,Output = cms.string(options.outputFile)
     ,TriggerResults = cms.InputTag("TriggerResults","","HLT")
     ,TriggerEvent = cms.InputTag("hltTriggerSummaryAOD","","HLT")
     ,GeneratorTag = cms.InputTag("genParticles","")
