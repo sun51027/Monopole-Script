@@ -24,45 +24,36 @@ options.parseArguments()
 
 
 process = cms.Process("Mpl")
-print("pass Mpl")
 ### standard MessageLoggerConfiguration
 process.load("FWCore.MessageService.MessageLogger_cfi")
 
-print("pass MessageLoggerConfiguration")
 ### Standard Configurations
 process.load('Configuration.StandardSequences.Services_cff')
-print("pass Servise")
 process.load('SimGeneral.HepPDTESSource.pythiapdt_cfi')
 process.load('FWCore.MessageService.MessageLogger_cfi')
 process.load('Configuration.EventContent.EventContent_cff')
 process.load('SimGeneral.MixingModule.mixNoPU_cfi')
-print("pass SimGener")
 process.load('Configuration.StandardSequences.GeometryRecoDB_cff')
 process.load('Configuration.StandardSequences.MagneticField_cff')
 process.load('Configuration.StandardSequences.RawToDigi_cff')
 process.load('Configuration.StandardSequences.L1Reco_cff')
-print("pass L1Reco_cff")
 process.load('Configuration.StandardSequences.Reconstruction_cff')
 process.load('CommonTools.ParticleFlow.EITopPAG_cff')
 process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
-print("pass Standard Configurations")
 # Fitter-smoother: loosen outlier rejection as for first data-taking with LHC "collisions"
 
 process.KFFittingSmootherWithOutliersRejectionAndRK.BreakTrajWith2ConsecutiveMissing = False
 process.KFFittingSmootherWithOutliersRejectionAndRK.EstimateCut = 1000
-print("pass Fitter-smoother")
 ## Conditions
 from Configuration.AlCa.GlobalTag import GlobalTag
 #process.GlobalTag = GlobalTag(process.GlobalTag, '106X_dataRun2_v32', '')
 process.GlobalTag = GlobalTag(process.GlobalTag, '106X_upgrade2018_realistic_v16_L1v1', '')
-print("pass GlobalTag")
 ## Track refitter specific stuff
 from RecoTracker.TrackProducer.TrackRefitters_cff import *
 process.load("RecoTracker.TrackProducer.TrackRefitters_cff")
 process.load("RecoTracker.MeasurementDet.MeasurementTrackerEventProducer_cfi")
-print("passTrack refitter specific stuff")
 ### unclean EE
 process.uncleanEERecovered = cms.EDProducer(
     'UncleanSCRecoveryProducer',
@@ -76,25 +67,20 @@ process.uncleanEERecovered = cms.EDProducer(
     bcCollection = cms.string('uncleanEndcapBasicClusters'),
     scCollection = cms.string('uncleanEndcapSuperClusters'),
 )
-print("pass uncleanEERecovered")
 process.maxEvents = cms.untracked.PSet(
     input = cms.untracked.int32(-1)
     #input = cms.untracked.int32(options.maxEvents)
 )
-print("pass maxEvents")
 process.source = cms.Source(
     "PoolSource",
    fileNames = cms.untracked.vstring( options.inputFiles),
  #   fileNames = cms.untracked.vstring('file:/eos/user/l/lshih/Data/Data_SinglePhotonExoMonopole_2018.root'),
     duplicateCheckMode = cms.untracked.string('checkEachRealDataFile') 
 )
-print("pass source")
 ### Construct combined (clean and uncleanOnly Ecal clusters)
 process.load("RecoEcal.EgammaClusterProducers.uncleanSCRecovery_cfi")
-print("pass Construct combined ")
 import FWCore.PythonUtilities.LumiList as LumiList
 import FWCore.ParameterSet.Types as CfgTypes
-print("pass FWCore.ParameterSet.Types as CfgTypes")
 process.Monopoler = cms.EDAnalyzer(
     'MonoNtupleDumper'
     ,isData = cms.bool(True)
@@ -132,24 +118,20 @@ process.Monopoler = cms.EDAnalyzer(
     ,TrackErrorFudge=cms.untracked.double(0.02)
     ,TrackHitOutput=cms.untracked.bool(True)
 )
-print("pass Monopoler")
 process.ecalCombine_step = cms.Path(process.uncleanSCRecovered)
 process.ecalCombineEE_step = cms.Path(process.uncleanEERecovered)
 #process.refit_step = cms.Path(process.TrackRefitter)
 process.refit_step = cms.Path(process.MeasurementTrackerEvent * process.TrackRefitter)
 process.mpl_step = cms.Path(process.Monopoler)
-print("pass steps")
 process.options = cms.untracked.PSet(wantSummary = cms.untracked.bool(True))
 process.MessageLogger.suppressWarning.append("Monopoler")
 process.load("FWCore.MessageService.MessageLogger_cfi")
-print("MessageLogge")
 process.p1 = cms.Schedule(
     process.ecalCombine_step
     ,process.ecalCombineEE_step
     ,process.refit_step
     ,process.mpl_step
 )
-print("pass cms Schedule and end of the run")
 #process.outpath = cms.EndPath(process.TRACKS)
 
 #process.load("JetMETCorrections.Configuration.L2L3Corrections_Summer08_cff")
