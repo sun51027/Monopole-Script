@@ -31,14 +31,17 @@ process.load("FWCore.MessageService.MessageLogger_cfi")
 print("pass MessageLoggerConfiguration")
 ### Standard Configurations
 process.load('Configuration.StandardSequences.Services_cff')
+print("pass Servise")
 process.load('SimGeneral.HepPDTESSource.pythiapdt_cfi')
 process.load('FWCore.MessageService.MessageLogger_cfi')
 process.load('Configuration.EventContent.EventContent_cff')
 process.load('SimGeneral.MixingModule.mixNoPU_cfi')
+print("pass SimGener")
 process.load('Configuration.StandardSequences.GeometryRecoDB_cff')
 process.load('Configuration.StandardSequences.MagneticField_cff')
 process.load('Configuration.StandardSequences.RawToDigi_cff')
 process.load('Configuration.StandardSequences.L1Reco_cff')
+print("pass L1Reco_cff")
 process.load('Configuration.StandardSequences.Reconstruction_cff')
 process.load('CommonTools.ParticleFlow.EITopPAG_cff')
 process.load('Configuration.StandardSequences.EndOfProcess_cff')
@@ -52,6 +55,7 @@ process.KFFittingSmootherWithOutliersRejectionAndRK.EstimateCut = 1000
 print("pass Fitter-smoother")
 ## Conditions
 from Configuration.AlCa.GlobalTag import GlobalTag
+#process.GlobalTag = GlobalTag(process.GlobalTag, '106X_dataRun2_v32', '')
 process.GlobalTag = GlobalTag(process.GlobalTag, '106X_upgrade2018_realistic_v16_L1v1', '')
 print("pass GlobalTag")
 ## Track refitter specific stuff
@@ -80,8 +84,8 @@ process.maxEvents = cms.untracked.PSet(
 print("pass maxEvents")
 process.source = cms.Source(
     "PoolSource",
-    fileNames = cms.untracked.vstring( options.inputFiles),
-    #fileNames = cms.untracked.vstring('file:RECO.root'),
+   fileNames = cms.untracked.vstring( options.inputFiles),
+ #   fileNames = cms.untracked.vstring('file:/eos/user/l/lshih/Data/Data_SinglePhotonExoMonopole_2018.root'),
     duplicateCheckMode = cms.untracked.string('checkEachRealDataFile') 
 )
 print("pass source")
@@ -93,8 +97,8 @@ import FWCore.ParameterSet.Types as CfgTypes
 print("pass FWCore.ParameterSet.Types as CfgTypes")
 process.Monopoler = cms.EDAnalyzer(
     'MonoNtupleDumper'
-    ,isData = cms.bool(False)
-    ,Output = cms.string("MonoNtuple2018_MC_3000.root")
+    ,isData = cms.bool(True)
+    ,Output = cms.string("MonoNtuple2016_MC_1000.root")
     #,Output = cms.string(options.outputFile)
     ,TriggerResults = cms.InputTag("TriggerResults","","HLT")
     ,TriggerEvent = cms.InputTag("hltTriggerSummaryAOD","","HLT")
