@@ -4,13 +4,18 @@ CMS release version :CMSSW_10_6_23
 ## Monopole Analysis
 **To generate ntuple locally:**  
  `scarm b `  
- `cmsRun ntuple.py inputFiles=file:input.root maxEvents=-1 outputFile=output.root `  
+ `cmsRun ntuple_mc_YEAR_cfg.py inputFiles=file:input.root maxEvents=-1 outputFile=output.root `  
 
+Note: I recommend not to do this first, since all files in this repository were defaulted to be used for "Condor", see below topic. If you just want to run one file for test, you have to cancel the comments in these lines:
+```c
+process.maxEvents = cms.untracked.PSet(
+    input = cms.untracked.int32(options.maxEvents)
+)
+Output = cms.string(options.outputFile)
+```
 **To submit jobs onto Condor:**  
 
-Please change your file (real)path in the submit.sh, remoteFileList.txt, tmpSUB.SUB before you submit jobs.
-
-You also have to create new folder for condor Output, Error, Log messages from condor job.
+Please try to understand how submit.sh and tmpSUB.SUB work with relation to ntuple_mc_YEAR_cfg.py (the default year is 2018, mass 1000GeV), and change the file (real)path in the submit.sh, remoteFileList.txt, tmpSUB.SUB before you submit jobs. You also have to create new folder for condor Output, Error, Log messages from condor job.
  
 Load the RECO files in Phat's eos space:
 
