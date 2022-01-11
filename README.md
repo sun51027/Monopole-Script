@@ -22,9 +22,20 @@ Check the status of your jobs
 
 `condor_q`  
 
-**Systematic Uncertainty**
+## Systematic Uncertainty
+
 To switch OFF the spike algorithm (for Ecal sysematic uncertainty):
-`vim `
+
+`vim RecoParticleFlow/PFClusterProducer/python/particleFlowRecHitECAL_cfi.py`
+switch True to False for these lines:
+      timingCleaning = cms.bool(True),
+      topologicalCleaning = cms.bool(True),
+
+To modify the Dedx crosstalk effect with 10% (for X0 or X1 or X2):
+
+`vim SimGeneral/MixingModule/python/SiStripSimParameters_cfi.py`
+
+We only choose to change X0 up and down with 10% for systematic study, so you only need to comment the default numbers and open the X0(up or down).
 
 
 Useful condor tutorial:  
