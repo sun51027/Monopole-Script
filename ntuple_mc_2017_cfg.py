@@ -49,7 +49,7 @@ process.KFFittingSmootherWithOutliersRejectionAndRK.EstimateCut = 1000
 ## Conditions
 from Configuration.AlCa.GlobalTag import GlobalTag
 #process.GlobalTag = GlobalTag(process.GlobalTag, '106X_dataRun2_v32', '')
-process.GlobalTag = GlobalTag(process.GlobalTag, '106X_upgrade2018_realistic_v16_L1v1', '')
+process.GlobalTag = GlobalTag(process.GlobalTag, '106X_mc2017_realistic_v8', '')
 ## Track refitter specific stuff
 from RecoTracker.TrackProducer.TrackRefitters_cff import *
 process.load("RecoTracker.TrackProducer.TrackRefitters_cff")
@@ -73,8 +73,10 @@ process.maxEvents = cms.untracked.PSet(
 )
 process.source = cms.Source(
     "PoolSource",
-   fileNames = cms.untracked.vstring( options.inputFiles),
- #   fileNames = cms.untracked.vstring('file:/eos/user/l/lshih/Data/Data_SinglePhotonExoMonopole_2018.root'),
+    fileNames = cms.untracked.vstring( options.inputFiles),
+#    fileNames = cms.untracked.vstring(
+#       'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO-v2/2017-1000/RECO_2017_1000_2.root'
+#    ),
     duplicateCheckMode = cms.untracked.string('checkEachRealDataFile') 
 )
 ### Construct combined (clean and uncleanOnly Ecal clusters)
@@ -84,7 +86,7 @@ import FWCore.ParameterSet.Types as CfgTypes
 process.Monopoler = cms.EDAnalyzer(
     'MonoNtupleDumper'
     ,isData = cms.bool(False)
-    ,Output = cms.string("MonoNtuple2018_MC_1000.root")
+    ,Output = cms.string("MonoNtuple2017_MC_1000.root")
     #,Output = cms.string(options.outputFile)
     ,TriggerResults = cms.InputTag("TriggerResults","","HLT")
     ,TriggerEvent = cms.InputTag("hltTriggerSummaryAOD","","HLT")

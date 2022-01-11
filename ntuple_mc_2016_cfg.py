@@ -1,9 +1,3 @@
-### Lin added 'options' August 2021
-##
-##	One can decide the input file name, output file name, max events by'options'
-##	command:
-##	cmsRun ntuple.py inputFiles=file:YourInputFile.root maxEvents=-1 outputFile=YourOutputName.root 
-##
 import FWCore.ParameterSet.Config as cms
 
 ### 'options functions' 
@@ -21,9 +15,8 @@ options.register ('maxSize',
 				  "Maximum (suggested) file size (in Kb)")
 options.parseArguments()
 
-
-
 process = cms.Process("Mpl")
+
 ### standard MessageLoggerConfiguration
 process.load("FWCore.MessageService.MessageLogger_cfi")
 
@@ -42,18 +35,20 @@ process.load('CommonTools.ParticleFlow.EITopPAG_cff')
 process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
-# Fitter-smoother: loosen outlier rejection as for first data-taking with LHC "collisions"
-
+## Fitter-smoother: loosen outlier rejection as for first data-taking with LHC "collisions"
 process.KFFittingSmootherWithOutliersRejectionAndRK.BreakTrajWith2ConsecutiveMissing = False
 process.KFFittingSmootherWithOutliersRejectionAndRK.EstimateCut = 1000
-## Conditions
+
+### Conditions
 from Configuration.AlCa.GlobalTag import GlobalTag
-#process.GlobalTag = GlobalTag(process.GlobalTag, '106X_dataRun2_v32', '')
-process.GlobalTag = GlobalTag(process.GlobalTag, '106X_upgrade2018_realistic_v16_L1v1', '')
-## Track refitter specific stuff
-from RecoTracker.TrackProducer.TrackRefitters_cff import *
+process.GlobalTag = GlobalTag(process.GlobalTag, '80X_mcRun2_asymptotic_2016_TrancheIV_v6', '')
+#process.GlobalTag = GlobalTag(process.GlobalTag, '106X_mcRun2_asymptotic_v13', '')
+
+### Track refitter specific stuff
+#from RecoTracker.TrackProducer.TrackRefitters_cff import *
 process.load("RecoTracker.TrackProducer.TrackRefitters_cff")
-process.load("RecoTracker.MeasurementDet.MeasurementTrackerEventProducer_cfi")
+#process.load("RecoTracker.MeasurementDet.MeasurementTrackerEventProducer_cfi")
+
 ### unclean EE
 process.uncleanEERecovered = cms.EDProducer(
     'UncleanSCRecoveryProducer',
@@ -67,28 +62,34 @@ process.uncleanEERecovered = cms.EDProducer(
     bcCollection = cms.string('uncleanEndcapBasicClusters'),
     scCollection = cms.string('uncleanEndcapSuperClusters'),
 )
+
 process.maxEvents = cms.untracked.PSet(
     input = cms.untracked.int32(-1)
-    #input = cms.untracked.int32(options.maxEvents)
 )
+
 process.source = cms.Source(
     "PoolSource",
    fileNames = cms.untracked.vstring( options.inputFiles),
- #   fileNames = cms.untracked.vstring('file:/eos/user/l/lshih/Data/Data_SinglePhotonExoMonopole_2018.root'),
+#    fileNames = cms.untracked.vstring(
+# 	'file:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO-v2/2016-1000/RECO_2016_1000_1.root'
+#    ),
     duplicateCheckMode = cms.untracked.string('checkEachRealDataFile') 
 )
+
 ### Construct combined (clean and uncleanOnly Ecal clusters)
 process.load("RecoEcal.EgammaClusterProducers.uncleanSCRecovery_cfi")
+
 import FWCore.PythonUtilities.LumiList as LumiList
 import FWCore.ParameterSet.Types as CfgTypes
+
 process.Monopoler = cms.EDAnalyzer(
     'MonoNtupleDumper'
     ,isData = cms.bool(False)
-    ,Output = cms.string("MonoNtuple2018_MC_1000.root")
-    #,Output = cms.string(options.outputFile)
+    ,Output = cms.string("MonoNtuple2016_MC_1000.root")
     ,TriggerResults = cms.InputTag("TriggerResults","","HLT")
     ,TriggerEvent = cms.InputTag("hltTriggerSummaryAOD","","HLT")
-    ,GeneratorTag = cms.InputTag("genParticles","")
+#    ,GeneratorTag = cms.InputTag("generatorSmeared","")  
+    ,GeneratorTag = cms.InputTag("genParticles","")    
     ,PrimaryVertices = cms.InputTag("offlinePrimaryVertices","")                                 
     ,EcalEBRecHits = cms.InputTag("ecalRecHit","EcalRecHitsEB") 
     ,EcalEERecHits = cms.InputTag("ecalRecHit","EcalRecHitsEE") 
@@ -97,9 +98,9 @@ process.Monopoler = cms.EDAnalyzer(
     ,ElectronTag = cms.InputTag("gedGsfElectrons","")
     ,PhotonTag = cms.InputTag("photons","")
     ,PFTag = cms.InputTag("particleFlow","")
-    ,METTag = cms.InputTag("pfMet","")
     ,GenMETTag = cms.InputTag("genMetTrue","")
-    ,CaloMETTag = cms.InputTag("caloMet","")
+    ,CaloMETTag = cms.InputTag("caloMet","") 
+    ,METTag = cms.InputTag("pfMet","")
     ,bcClusterTag = cms.InputTag("hybridSuperClusters","uncleanOnlyHybridBarrelBasicClusters") 
     ,ccClusterTag = cms.InputTag("hybridSuperClusters","hybridBarrelBasicClusters")
     ,combClusterTag = cms.InputTag("uncleanSCRecovered","uncleanHybridBarrelBasicClusters") 
@@ -118,14 +119,18 @@ process.Monopoler = cms.EDAnalyzer(
     ,TrackErrorFudge=cms.untracked.double(0.02)
     ,TrackHitOutput=cms.untracked.bool(True)
 )
+
 process.ecalCombine_step = cms.Path(process.uncleanSCRecovered)
 process.ecalCombineEE_step = cms.Path(process.uncleanEERecovered)
 #process.refit_step = cms.Path(process.TrackRefitter)
 process.refit_step = cms.Path(process.MeasurementTrackerEvent * process.TrackRefitter)
 process.mpl_step = cms.Path(process.Monopoler)
+
 process.options = cms.untracked.PSet(wantSummary = cms.untracked.bool(True))
-process.MessageLogger.suppressWarning.append("Monopoler")
+
 process.load("FWCore.MessageService.MessageLogger_cfi")
+process.MessageLogger.suppressWarning.append("Monopoler")
+
 process.p1 = cms.Schedule(
     process.ecalCombine_step
     ,process.ecalCombineEE_step
@@ -133,8 +138,3 @@ process.p1 = cms.Schedule(
     ,process.mpl_step
 )
 #process.outpath = cms.EndPath(process.TRACKS)
-
-#process.load("JetMETCorrections.Configuration.L2L3Corrections_Summer08_cff")
-#process.prefer("L2L3JetCorrectorIC5Calo")
-#process.load("JetMETCorrections.Type1MET.MetType1Corrections_cff")
-#process.corMetType1Icone5.corrector=cms.string('L2L3JetCorrectorIC5Calo')
