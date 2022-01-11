@@ -224,13 +224,6 @@ private:
   edm::EDGetTokenT< reco::BasicClusterCollection > m_Tag_eeComb;
 
 
-//  edm::EDGetTokenT< reco::BasicClusterCollection > m_Tag_bClusters;
-//  edm::EDGetTokenT< reco::BasicClusterCollection > m_Tag_cClusters;
-//  edm::EDGetTokenT< reco::BasicClusterCollection > m_Tag_combClusters;
-//  edm::EDGetTokenT< reco::BasicClusterCollection > m_Tag_eeClean;
-//  edm::EDGetTokenT< reco::BasicClusterCollection > m_Tag_eeUnclean;
-//  edm::EDGetTokenT< reco::BasicClusterCollection > m_Tag_eeComb;
-
   bool m_isData;
 
   // Monopole Ecal Observables
@@ -974,18 +967,10 @@ void MonoNtupleDumper::analyze(const edm::Event& iEvent, const edm::EventSetup& 
     m_egClust_size.push_back( (*bClusters)[i].size() );
     m_egClust_eta.push_back( (*bClusters)[i].eta() );
     m_egClust_phi.push_back( (*bClusters)[i].phi() );
-/* static float e5x5(const reco::BasicCluster &cluster,
-                    const EcalRecHitCollection *recHits,
-                    const CaloTopology *topology);
-  static float swissCross(const DetId& id,
-                          const EcalRecHitCollection& recHits,
-                          float recHitThreshold,
-                          bool avoidIeta85 = true);*/
     const float e55 = ecalTool.e5x5((*bClusters)[i],ecalRecHits.product(),topology);
     const float e51 = ecalTool.e5x1((*bClusters)[i],ecalRecHits.product(),topology);
     const float e15 = ecalTool.e1x5((*bClusters)[i],ecalRecHits.product(),topology);
     const float eMax = ecalTool.eMax((*bClusters)[i],ecalRecHits.product());
-//    const float SwissCross = ecalTools.swissCross(EcalBarrel,*ecalRecHits.product(),0,true);
     const float e2x5Right  = ecalTool.e2x5Right((*bClusters)[i],ecalRecHits.product(),topology);
     const float e2x5Left   = ecalTool.e2x5Left((*bClusters)[i],ecalRecHits.product(),topology);
     const float e2x5Top    = ecalTool.e2x5Top((*bClusters)[i],ecalRecHits.product(),topology);
@@ -1096,7 +1081,6 @@ void MonoNtupleDumper::analyze(const edm::Event& iEvent, const edm::EventSetup& 
     const float e51 = ecalTool.e5x1((*combClusters)[i],ecalRecHits.product(),topology);
     const float e15 = ecalTool.e1x5((*combClusters)[i],ecalRecHits.product(),topology);
     const float eMax = ecalTool.eMax((*combClusters)[i],ecalRecHits.product());
-    //const float SwissCross = ecalTools.swissCross(EcalBarrel,*ecalRecHits.product(),0,false);
     const float e2x5Right  = ecalTool.e2x5Right((*combClusters)[i],ecalRecHits.product(),topology);
     const float e2x5Left   = ecalTool.e2x5Left((*combClusters)[i],ecalRecHits.product(),topology);
     const float e2x5Top    = ecalTool.e2x5Top((*combClusters)[i],ecalRecHits.product(),topology);
@@ -1154,7 +1138,6 @@ void MonoNtupleDumper::analyze(const edm::Event& iEvent, const edm::EventSetup& 
     const float e51 = ecalTool.e5x1((*eeClean)[i],eeRecHits.product(),topology);
     const float e15 = ecalTool.e1x5((*eeClean)[i],eeRecHits.product(),topology);
     const float eMax = ecalTool.eMax((*eeClean)[i],eeRecHits.product());
-//    const float SwissCross = ecalTools.swissCross(EcalBarrel,*ecalRecHits.product(),0,true);
     const float e2x5Right  = ecalTool.e2x5Right((*eeClean)[i],eeRecHits.product(),topology);
     const float e2x5Left   = ecalTool.e2x5Left((*eeClean)[i],eeRecHits.product(),topology);
     const float e2x5Top    = ecalTool.e2x5Top((*eeClean)[i],eeRecHits.product(),topology);
@@ -1207,7 +1190,6 @@ void MonoNtupleDumper::analyze(const edm::Event& iEvent, const edm::EventSetup& 
     const float e51 = ecalTool.e5x1((*eeUnclean)[i],eeRecHits.product(),topology);
     const float e15 = ecalTool.e1x5((*eeUnclean)[i],eeRecHits.product(),topology);
     const float eMax = ecalTool.eMax((*eeUnclean)[i],eeRecHits.product());
-    //const float SwissCross = ecalTools.swissCross(EcalBarrel,*eeRecHits.product(),0,true);
     const float e2x5Right  = ecalTool.e2x5Right((*eeUnclean)[i],eeRecHits.product(),topology);
     const float e2x5Left   = ecalTool.e2x5Left((*eeUnclean)[i],eeRecHits.product(),topology);
     const float e2x5Top    = ecalTool.e2x5Top((*eeUnclean)[i],eeRecHits.product(),topology);
@@ -1260,7 +1242,6 @@ void MonoNtupleDumper::analyze(const edm::Event& iEvent, const edm::EventSetup& 
     const float e51 = ecalTool.e5x1((*eeComb)[i],eeRecHits.product(),topology);
     const float e15 = ecalTool.e1x5((*eeComb)[i],eeRecHits.product(),topology);
     const float eMax = ecalTool.eMax((*eeComb)[i],eeRecHits.product());
-    //const float SwissCross = ecalTools.swissCross(EcalBarrel,*eeRecHits.product(),0,true);
     const float e2x5Right  = ecalTool.e2x5Right((*eeComb)[i],eeRecHits.product(),topology);
     const float e2x5Left   = ecalTool.e2x5Left((*eeComb)[i],eeRecHits.product(),topology);
     const float e2x5Top    = ecalTool.e2x5Top((*eeComb)[i],eeRecHits.product(),topology);
@@ -1390,10 +1371,6 @@ void MonoNtupleDumper::analyze(const edm::Event& iEvent, const edm::EventSetup& 
     m_ele_pz.push_back( ele.pz() );
     m_ele_eta.push_back( ele.eta() );
     m_ele_phi.push_back( ele.phi() );
-    // add by Lin July 28 2021
-//    if(ele.isPF()==true) m_ele_isPF.push_back(1);
-//    else	      m_ele_isPF.push_back(0);
-//    m_ele_isPF.push_back( ele.isPF());
     if ( !m_isData ) {
       //     m_ele_matchDR.push_back( tagger.matchDR()[i] );
       //  m_ele_tagged.push_back( tagger.tagResult()[i] );
@@ -1602,55 +1579,34 @@ MonoNtupleDumper::beginJob()
   m_tree->Branch("cand_pho175TrigCode",&m_candPho175TrigCode);
   m_tree->Branch("cand_pho200TrigCode",&m_candPho200TrigCode);
  
-  //unclean
-/*  m_tree->Branch("cand_f51_Unclean",&m_candSeedFrac_Unclean);
-  m_tree->Branch("cand_f15_Unclean",&m_candf15_Unclean);
-  m_tree->Branch("cand_e55_Unclean",&m_candE55_Unclean);
-  m_tree->Branch("cand_SwissCross_Unclean",&m_candSwissCross_Unclean);
-  m_tree->Branch("cand_HIso_Unclean",&m_candHIso_Unclean);
-  m_tree->Branch("cand_eta_Unclean",&m_candEta_Unclean);
-  m_tree->Branch("cand_phi_Unclean",&m_candPhi_Unclean);
-
-  //clean
-
-  m_tree->Branch("cand_f51_Clean",&m_candSeedFrac_Clean);
-  m_tree->Branch("cand_f15_Clean",&m_candf15_Clean);
-  m_tree->Branch("cand_e55_Clean",&m_candE55_Clean);
-  m_tree->Branch("cand_SwissCross_Clean",&m_candSwissCross_Clean);
-  m_tree->Branch("cand_HIso_Clean",&m_candHIso_Clean);
-  m_tree->Branch("cand_eta_Clean",&m_candEta_Clean);
-  m_tree->Branch("cand_phi_Clean",&m_candPhi_Clean);
-*/
-/*
-  m_tree->Branch("clust_N",&m_nClusters,"clust_N/i");
-  m_tree->Branch("clust_E",&m_clust_E);
-  m_tree->Branch("clust_eta",&m_clust_eta);
-  m_tree->Branch("clust_phi",&m_clust_phi);
-  m_tree->Branch("clust_L",&m_clust_L);
-  m_tree->Branch("clust_W",&m_clust_W);
-  m_tree->Branch("clust_sigEta",&m_clust_sigEta);
-  m_tree->Branch("clust_sigPhi",&m_clust_sigPhi);
-  m_tree->Branch("clust_skewEta",&m_clust_skewEta);
-  m_tree->Branch("clust_skewPhi",&m_clust_skewPhi);
-  m_tree->Branch("clust_seedFrac",&m_clust_seedFrac);
-  m_tree->Branch("clust_firstFrac",&m_clust_firstFrac);
-  m_tree->Branch("clust_secondFrac",&m_clust_secondFrac);
-  m_tree->Branch("clust_thirdFrac",&m_clust_thirdFrac);
-  m_tree->Branch("clust_matchDR",&m_clust_matchDR);
-  m_tree->Branch("clust_matchTime",&m_clust_matchTime);
-  m_tree->Branch("clust_matchPt",&m_clust_matchPt);
-  m_tree->Branch("clust_matchPID",&m_clust_matchPID);
-  m_tree->Branch("clust_tagged",&m_clust_tagged);
-  m_tree->Branch("clust_hsE",&m_clust_hsE);
-  m_tree->Branch("clust_hsTime",&m_clust_hsTime);
-  m_tree->Branch("clust_hsInSeed",&m_clust_hsInSeed);
-  m_tree->Branch("clust_hsWeird",&m_clust_hsWeird);
-  m_tree->Branch("clust_hsDiWeird",&m_clust_hsDiWeird);
-   if(_ClustHitOutput){
-   m_tree->Branch("clust_Ecells",&m_clust_Ecells,"clust_Ecells[1500]/D");
-   m_tree->Branch("clust_Tcells",&m_clust_Tcells,"clust_Tcells[1500]/D");
-  }
-*/     
+//  m_tree->Branch("clust_N",&m_nClusters,"clust_N/i");
+//  m_tree->Branch("clust_E",&m_clust_E);
+//  m_tree->Branch("clust_eta",&m_clust_eta);
+//  m_tree->Branch("clust_phi",&m_clust_phi);
+//  m_tree->Branch("clust_L",&m_clust_L);
+//  m_tree->Branch("clust_W",&m_clust_W);
+//  m_tree->Branch("clust_sigEta",&m_clust_sigEta);
+//  m_tree->Branch("clust_sigPhi",&m_clust_sigPhi);
+//  m_tree->Branch("clust_skewEta",&m_clust_skewEta);
+//  m_tree->Branch("clust_skewPhi",&m_clust_skewPhi);
+//  m_tree->Branch("clust_seedFrac",&m_clust_seedFrac);
+//  m_tree->Branch("clust_firstFrac",&m_clust_firstFrac);
+//  m_tree->Branch("clust_secondFrac",&m_clust_secondFrac);
+//  m_tree->Branch("clust_thirdFrac",&m_clust_thirdFrac);
+//  m_tree->Branch("clust_matchDR",&m_clust_matchDR);
+//  m_tree->Branch("clust_matchTime",&m_clust_matchTime);
+//  m_tree->Branch("clust_matchPt",&m_clust_matchPt);
+//  m_tree->Branch("clust_matchPID",&m_clust_matchPID);
+//  m_tree->Branch("clust_tagged",&m_clust_tagged);
+//  m_tree->Branch("clust_hsE",&m_clust_hsE);
+//  m_tree->Branch("clust_hsTime",&m_clust_hsTime);
+//  m_tree->Branch("clust_hsInSeed",&m_clust_hsInSeed);
+//  m_tree->Branch("clust_hsWeird",&m_clust_hsWeird);
+//  m_tree->Branch("clust_hsDiWeird",&m_clust_hsDiWeird);
+//   if(_ClustHitOutput){
+//   m_tree->Branch("clust_Ecells",&m_clust_Ecells,"clust_Ecells[1500]/D");
+//   m_tree->Branch("clust_Tcells",&m_clust_Tcells,"clust_Tcells[1500]/D");
+//  }
    m_tree->Branch("egClust_N",&m_nCleanEgamma,"egClust_N/i");
    m_tree->Branch("egClust_E",&m_egClust_E);
    m_tree->Branch("egClust_size",&m_egClust_size);
