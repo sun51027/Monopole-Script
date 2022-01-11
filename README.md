@@ -8,11 +8,13 @@ CMS release version :CMSSW_10_6_23
 
 **To submit jobs onto Condor:**  
 
-please change your file (real)path in the submit.sh, remoteFileList.txt,tmpSUB.SUB before you submit
+Please change your file (real)path in the submit.sh, remoteFileList.txt, tmpSUB.SUB before you submit jobs.
 
-You also have to create new folder for condor Output, Error, Log messages from condor job 
+You also have to create new folder for condor Output, Error, Log messages from condor job.
  
-Load the RECO files in Phat's eos space (current path:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO-v2/)
+Load the RECO files in Phat's eos space:
+
+current path:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO-v2/
 
 `realpath RECOfile-directory >> remoteFileList.txt`
 
@@ -22,7 +24,7 @@ Submit jobs:
 
 `condor_submit tmpSUB.SUB`  
 
-Check the status of your jobs  
+Check the status of your jobs:
 
 `condor_q`  
 
@@ -30,13 +32,13 @@ Check the status of your jobs
 
 Load particular packages from CMSSW_RELEASE_BASE and compile:
 
-`cp $CMSSW_RELEASE_BASE/src/{RecoParticleFlow,Configuration,SimGeneral}`
+`cp $CMSSW_RELEASE_BASE/src/{RecoParticleFlow,Configuration,SimGeneral} ~/CMSSW_10_6_23/src`
 
 `scram b -j 4`
 
 As long as structure in your workspace  is the same as the CMSSW_BASE, it will run the your local files first when `cmsRun`.
 Note that I have modified SiStripSimParameters_cfi.py in SimGeneral, you can just copy my SiStripSimParameters_cfi.py to use. 
-The usage method see below:
+The usage see below:
 
 **To modify the Dedx crosstalk effect with 10% (for X0 or X1 or X2):**
 
