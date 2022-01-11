@@ -24,14 +24,15 @@ Check the status of your jobs
 
 ## Systematic Uncertainty
 
-To switch OFF the spike algorithm (for Ecal sysematic uncertainty):
+**To switch OFF the spike algorithm (for Ecal sysematic uncertainty):**
 
 `vim RecoParticleFlow/PFClusterProducer/python/particleFlowRecHitECAL_cfi.py`
+
 switch True to False for these lines:
       timingCleaning = cms.bool(True),
       topologicalCleaning = cms.bool(True),
 
-To modify the Dedx crosstalk effect with 10% (for X0 or X1 or X2):
+**To modify the Dedx crosstalk effect with 10% (for X0 or X1 or X2):**
 
 `vim SimGeneral/MixingModule/python/SiStripSimParameters_cfi.py`
 
