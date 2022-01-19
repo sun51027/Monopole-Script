@@ -2,11 +2,12 @@
 These files are in lxplus.  
 CMS release version : CMSSW_10_6_23   
 Set up enviroment before running the script  
-`cmsrel CMSSW_10_6_23  
+```cmsrel CMSSW_10_6_23  
 cd CMSSW_10_6_23/src  
 git clone git@github.com:sun51027/Monopole-Script.git  
 mv Monopole-Script/* .  
-scram b -j 4` 
+scram b -j 4
+``` 
 ## Monopole Analysis
 **To generate ntuple locally:**  
  `scarm b `  
