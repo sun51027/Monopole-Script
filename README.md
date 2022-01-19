@@ -23,15 +23,28 @@ Output = cms.string(options.outputFile)
 ```
 **To submit jobs onto Condor:**  
 
-Please try to understand how submit.sh and tmpSUB.SUB work with relation to ntuple_mc_YEAR_cfg.py (the default year is 2018, mass 1000GeV), and change the file (real)path in the submit.sh, remoteFileList.txt, tmpSUB.SUB before you submit jobs. You also have to create new folder for condor Output, Error, Log messages from condor job.
+Please try to understand how submit.sh and tmpSUB.SUB work with relation to ntuple_mc_YEAR_cfg.py (the default year is 2018, mass 1000GeV), and change your own AFS (real)path in the *submit.sh* and *tmpSUB.SUB* before you submit jobs. For example,  
+
+/afs/cern.ch/user/l/lshih/CMSSW_10_6_23/src -> /afs/cern.ch/user/m/maisway/CMSSW_10_6_23/src  
+(There are 8 address need to be changed in these two codes)
+
+You also have to create new folder for condor Output, Error, Log messages from condor job.
+```
+mkdir condor
+cd condor
+mkdir output errors stdout
+cd -
+```
  
 Load the RECO files in Phat's eos space:
 
-current path:/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO-v2/
+current path:  
+`/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO-v2/`
 
-`realpath RECOfile-directory >> remoteFileList.txt`
+`realpath /eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO-v2/YEAR-MASS/* >> remoteFileList.txt`
 
 Add "file:" in front of all lines (see remoteFileList.txt for example)  
+Note that there are some DeltaRayOff sample in 2018-1000,2000,3000,4000 and 2016-1000,2000. Please remote DeltaRayOff samples in remoteFileList.txt before you submit jobs.
 
 Submit jobs:
 
