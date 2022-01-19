@@ -38,10 +38,9 @@ mkdir output errors stdout
 cd -
 ```
  
-Load the RECO files in Phat's eos space:
-current path:  
-/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO-v2/
-
+Load the RECO files in Phat's eos space(current path):  
+/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO-v2/  
+Note:Skip this step when you run this script first time, since "remoteFileList.txt" in this package has 2018 1000GeV RECO files by default.  
 `realpath /eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO-v2/YEAR-MASS/* >> remoteFileList.txt`
 
 Add "file:" in front of all lines (*see remoteFileList.txt for example*)  
