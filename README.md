@@ -6,9 +6,11 @@ Set up enviroment before running the script
 cmsrel CMSSW_10_6_23  
 cd CMSSW_10_6_23/src  
 git clone git@github.com:sun51027/Monopole-Script.git  
-mv Monopole-Script/* .  
+mv Monopole-Script/* . 
+rm -rf SimGeneral 
 scram b -j 4
 ``` 
+Note: If you just want to generate Ntuple rather than study systematic uncertainty, you have to remove "SimGeneral". If you want to study systematic uncertainty, please see Systematic Uncertainty part.
 ## Monopole Analysis
 **To generate ntuple locally:**  
  `scarm b `  
@@ -37,13 +39,12 @@ cd -
 ```
  
 Load the RECO files in Phat's eos space:
-
 current path:  
-`/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO-v2/`
+/eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO-v2/
 
 `realpath /eos/cms/store/user/srimanob/monopole/13TeV/Legacy-RECO-v2/YEAR-MASS/* >> remoteFileList.txt`
 
-Add "file:" in front of all lines (see remoteFileList.txt for example)  
+Add "file:" in front of all lines (*see remoteFileList.txt for example*)  
 Note that there are some DeltaRayOff sample in 2018-1000,2000,3000,4000 and 2016-1000,2000. Please remote DeltaRayOff samples in remoteFileList.txt before you submit jobs.
 
 Submit jobs:
