@@ -84,3 +84,16 @@ switch True to False for these lines:
 
 Useful condor tutorial:  
 https://batchdocs.web.cern.ch/local/quick.html  
+
+## Run on Data
+
+Just to test if cmsRun can be successful in local.
+
+Download  ntuple_mc_2018_forData_cfg.py and latest MonoNtupleDumper.cc first.
+
+```
+scram b -j 4 
+xrdcp root://cmsxrootd.fnal.gov//store/data/Run2018A/EGamma/USER/EXOMONOPOLE-12Nov2019_UL2018-v2/270007/7F10EF9D-BDF9-074B-8216-834602DE11C3.root .
+cmsRun /afs/cern.ch/user/l/lshih/CMSSW_10_6_23/src/ntuple_mc_2018_forData_cfg.py inputFiles=file:7F10EF9D-BDF9-074B-8216-834602DE11C3.root
+````
+Still finding the problem with CRAB....
