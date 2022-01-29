@@ -1410,10 +1410,6 @@ void MonoNtupleDumper::analyze(const edm::Event& iEvent, const edm::EventSetup& 
   Handle<std::vector<reco::PFMET> > met;
   iEvent.getByToken(m_Tag_MET,met);
   
-
-  Handle<std::vector<reco::GenMET> > Genmet;
-  iEvent.getByToken(m_Tag_GenMET,Genmet);
-
   Handle<std::vector<reco::CaloMET> > Calomet;
   iEvent.getByToken(m_Tag_CaloMET,Calomet);
 
@@ -1426,32 +1422,23 @@ void MonoNtupleDumper::analyze(const edm::Event& iEvent, const edm::EventSetup& 
   m_CaloMpy = (*Calomet)[0].py();
   m_CaloMETPhi = (*Calomet)[0].phi(); 
 
-  m_GenMpt = (*Genmet)[0].pt(); 
-  m_GenMpx = (*Genmet)[0].px(); 
-  m_GenMpy = (*Genmet)[0].py(); 
-  m_GenMETPhi = (*Genmet)[0].phi(); 
 
 
 
 
   // fill generator Branches
   if (!m_isData){
+
+  Handle<std::vector<reco::GenMET> > Genmet;
+  iEvent.getByToken(m_Tag_GenMET,Genmet);
+
+  m_GenMpt = (*Genmet)[0].pt(); 
+  m_GenMpx = (*Genmet)[0].px(); 
+  m_GenMpy = (*Genmet)[0].py(); 
+  m_GenMETPhi = (*Genmet)[0].phi(); 
     
-    //Mono::MonoTruthSnoop snoopy(iEvent,iSetup,consumesCollector());
-    //const HepMC::GenParticle *mono = snoopy.mono(Mono::monopole);
-    //const HepMC::GenParticle *amon = snoopy.mono(Mono::anti_monopole);
-    Mono::MonoGenTrackExtrapolator extrap; 
+  Mono::MonoGenTrackExtrapolator extrap; 
  
-    //edm::InputTag m_mcproduct = edm::InputTag("generatorSmeared",""); 
-/*    edm::Handle<edm::HepMCProduct> mcproduct; 
-    iEvent.getByToken(m_mcproduct, mcproduct);
-    //
-    const HepMC::GenEvent* mc = mcproduct->GetEvent();
-    assert(mc);
-  */   
-    // print the event record
-    //std::cout<<"Pass edm::Handle"<<std::endl;
-    // mc->print();  // just do this for debug purposes
 	
     //added by Lin July 21
    Handle< vector<reco::GenParticle> > genParticles;
