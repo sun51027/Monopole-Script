@@ -64,49 +64,61 @@ SiStripSimBlock = cms.PSet(
 #    CouplingConstantRunIIDecIB1 = cms.vdouble(0.8220, 0.0773, 0.0117),
 #    CouplingConstantRunIIDecIB2 = cms.vdouble(0.8500, 0.0646, 0.0104),
 #    #TIB----Down x1 10% x2 const
-#    CouplingConstantRunIIDecIB1 = cms.vdouble(0.8502, 0.0632, 0.0117),
-#    CouplingConstantRunIIDecIB2 = cms.vdouble(0.8734, 0.0529, 0.0104),
+    # CouplingConstantRunIIDecIB1 = cms.vdouble(0.8502, 0.0632., 0.0117),
+    # CouplingConstantRunIIDecIB2 = cms.vdouble(0.8734, 0.0529, 0.0104),
+    #TIB----Up x1 10% x0 const
+    CouplingConstantRunIIDecIB1 = cms.vdouble(0.8361, 0.0773, 0.0046),
+    CouplingConstantRunIIDecIB2 = cms.vdouble(0.8616, 0.0646, 0.0046),
+   #TIB----Down x1 10% x0 const
+    CouplingConstantRunIIDecIB1 = cms.vdouble(0.8361, 0.0632, 0.0187),
+    CouplingConstantRunIIDecIB2 = cms.vdouble(0.8616, 0.0529, 0.0163),
 #    #TIB----Up x2 10% x1 const
-#    CouplingConstantRunIIDecIB1 = cms.vdouble(0.8338, 0.0703, 0.0128),
-#    CouplingConstantRunIIDecIB2 = cms.vdouble(0.8596, 0.0588, 0.0114),
+#    CouplingConstantRunIIDecIB1 = cms.vdouble(0., 0.0703, 0.),
+#    CouplingConstantRunIIDecIB2 = cms.vdouble(0., 0.0588, 0.),
 #    #TIB----Down x2 10% x1 const
-#    CouplingConstantRunIIDecIB1 = cms.vdouble(0.8384, 0.0703, 0.0105),
-#    CouplingConstantRunIIDecIB2 = cms.vdouble(0.8638, 0.0588, 0.0093),
-    #TIB default
-    CouplingConstantRunIIDecIB1 = cms.vdouble(0.8361, 0.0703, 0.0117),
-    CouplingConstantRunIIDecIB2 = cms.vdouble(0.8616, 0.0588, 0.0104),
+#    CouplingConstantRunIIDecIB1 = cms.vdouble(0., 0.0703, 0.),
+#    CouplingConstantRunIIDecIB2 = cms.vdouble(0., 0.0588, 0.),
+#    #TIB
+#    CouplingConstantRunIIDecIB1 = cms.vdouble(0.8361, 0.0703, 0.0117),
+#    CouplingConstantRunIIDecIB2 = cms.vdouble(0.8616, 0.0588, 0.0104),
 
     #-----------
 
-    #TOB--Up x0 10%
+    #TOB--Up x0 10% x2 const
 #    CouplingConstantRunIIDecOB2 = cms.vdouble(0.8717, 0.0438, 0.0203),
 #    CouplingConstantRunIIDecOB1 = cms.vdouble(0.8207, 0.0623, 0.0273),
-    #TOB--Down x0  10%
+    #TOB--Down x0 10% x2 const
 #    CouplingConstantRunIIDecOB2 = cms.vdouble(0.7132, 0.1231, 0.0203),
 #    CouplingConstantRunIIDecOB1 = cms.vdouble(0.6714, 0.1370, 0.0273),
     #TOB--Up x1 10% x2 const
 #    CouplingConstantRunIIDecOB2 = cms.vdouble(0.7760, 0.0917, 0.0203),
 #    CouplingConstantRunIIDecOB1 = cms.vdouble(0.7264, 0.1095, 0.0273),
 #    #TOB--Down x1 10% x2 const
-#    CouplingConstantRunIIDecOB2 = cms.vdouble(0.8094, 0.0750, 0.0203),
-#    CouplingConstantRunIIDecOB1 = cms.vdouble(0.7662, 0.0896, 0.0273),
+    # CouplingConstantRunIIDecOB2 = cms.vdouble(0.8094, 0.0750, 0.0203),
+    # CouplingConstantRunIIDecOB1 = cms.vdouble(0.7662, 0.0896, 0.0273),
+    #TOB--Up x1 10% x0 const
+   CouplingConstantRunIIDecOB2 = cms.vdouble(0.7925, 0.0917, 0.0917),
+   CouplingConstantRunIIDecOB1 = cms.vdouble(0.7461, 0.1095, 0.0174),
+#    #TOB--Down x1 10% x0 const
+    CouplingConstantRunIIDecOB2 = cms.vdouble(0.7925, 0.0750, 0.0287),
+    CouplingConstantRunIIDecOB1 = cms.vdouble(0.7461, 0.0896, 0.0373),
 #    #TOB--Up x2 10% x1 const
 #    CouplingConstantRunIIDecOB2 = cms.vdouble(0.7886, 0.0834, 0.0223),
 #    CouplingConstantRunIIDecOB1 = cms.vdouble(0.7408, 0.0996, 0.0300),
-    #TOB--Down x2 10% x1 const
+#    #TOB--Down x2 10% x1 const
 #    CouplingConstantRunIIDecOB2 = cms.vdouble(0.7968, 0.0834, 0.0182),
 #    CouplingConstantRunIIDecOB1 = cms.vdouble(0.7518, 0.0996, 0.0245),
-#    #TOB default
-    CouplingConstantRunIIDecOB2 = cms.vdouble(0.7925, 0.0834, 0.0203),
-    CouplingConstantRunIIDecOB1 = cms.vdouble(0.7461, 0.0996, 0.0273),
-
+#    #TOB
+#    CouplingConstantRunIIDecOB2 = cms.vdouble(0.7925, 0.0834, 0.0203),
+#    CouplingConstantRunIIDecOB1 = cms.vdouble(0.7461, 0.0996, 0.0273),
+#
     #-----------
 
-   #TID----Up x0 10%
+   #TID----Up x0 10% x2 const
 #    CouplingConstantRunIIDecW1a = cms.vdouble(0.9428, 0.0180, 0.0106),
 #    CouplingConstantRunIIDecW2a = cms.vdouble(0.9747, 0.0046, 0.008),
 #    CouplingConstantRunIIDecW3a = cms.vdouble(0.9882, 0.0045, 0.0014),
-    #TID----Down x0 10%
+#    #TID----Down x0 10% x2 const
 #    CouplingConstantRunIIDecW1a = cms.vdouble(0.7713, 0.1073, 0.0106),
 #    CouplingConstantRunIIDecW2a = cms.vdouble(0.7974, 0.0933, 0.008),
 #    CouplingConstantRunIIDecW3a = cms.vdouble(0.8085, 0.0943, 0.0014),
@@ -115,27 +127,35 @@ SiStripSimBlock = cms.PSet(
 #    CouplingConstantRunIIDecW2a = cms.vdouble(0.8762, 0.0539, 0.008),
 #    CouplingConstantRunIIDecW3a = cms.vdouble(0.8886, 0.0543, 0.0014),
 #     #TID---Down x1 10% x2 const
-#    CouplingConstantRunIIDecW1a = cms.vdouble(0.8694, 0.0547, 0.0106),
-#    CouplingConstantRunIIDecW2a = cms.vdouble(0.8958, 0.0441, 0.008),
-#    CouplingConstantRunIIDecW3a = cms.vdouble(0.9084, 0.0444, 0.0014),
-     #TID---Up x2 10% x1 const
+    # CouplingConstantRunIIDecW1a = cms.vdouble(0.8694, 0.0547, 0.0106),
+    # CouplingConstantRunIIDecW2a = cms.vdouble(0.8958, 0.0441, 0.008),
+    # CouplingConstantRunIIDecW3a = cms.vdouble(0.9084, 0.0444, 0.0014),
+     #TID---Up x1 10% x0 const
+   CouplingConstantRunIIDecW1a = cms.vdouble(0.8571, 0.0668, 0.0046),
+   CouplingConstantRunIIDecW2a = cms.vdouble(0.8861, 0.0539, 0.0175),
+   CouplingConstantRunIIDecW3a = cms.vdouble(0.8984, 0.0543, -0.0035),
+#     #TID---Down x1 10% x0 const
+    CouplingConstantRunIIDecW1a = cms.vdouble(0.8571, 0.0547, 0.0167),
+    CouplingConstantRunIIDecW2a = cms.vdouble(0.8861, 0.0441, 0.0128),
+    CouplingConstantRunIIDecW3a = cms.vdouble(0.8984, 0.0444, 0.0064),
+#     #TID---Up x2 10% x1 const
 #    CouplingConstantRunIIDecW1a = cms.vdouble(0.8552, 0.0608, 0.0116),
 #    CouplingConstantRunIIDecW2a = cms.vdouble(0.8844, 0.0490, 0.0088),
 #    CouplingConstantRunIIDecW3a = cms.vdouble(0.8982, 0.0494, 0.015),
-     #TID---Down x2 10% x1 const
+#     #TID---Down x2 10% x1 const
 #    CouplingConstantRunIIDecW1a = cms.vdouble(0.8594, 0.0608, 0.0095),
 #    CouplingConstantRunIIDecW2a = cms.vdouble(0.8876, 0.0490, 0.0072),
 #    CouplingConstantRunIIDecW3a = cms.vdouble(0.8988, 0.0494, 0.0012),
-#    #TID default
-    CouplingConstantRunIIDecW1a = cms.vdouble(0.8571, 0.0608, 0.0106),
-    CouplingConstantRunIIDecW2a = cms.vdouble(0.8861, 0.049, 0.008),
-    CouplingConstantRunIIDecW3a = cms.vdouble(0.8984, 0.0494, 0.0014),
+#    #TID
+#    CouplingConstantRunIIDecW1a = cms.vdouble(0.8571, 0.0608, 0.0106),
+#    CouplingConstantRunIIDecW2a = cms.vdouble(0.8861, 0.049, 0.008),
+#    CouplingConstantRunIIDecW3a = cms.vdouble(0.8984, 0.0494, 0.0014),
     #-----------
 
 
 
 
-    #TEC----Up x0 10% x2 unchanged
+    #TEC----Up x0 10% x2 const
 #    CouplingConstantRunIIDecW1b = cms.vdouble(0.9709, 0.0077, 0.0068),
 #    CouplingConstantRunIIDecW2b = cms.vdouble(0.9837, 0.0035, 0.0046),
 #    CouplingConstantRunIIDecW3b = cms.vdouble(0.9472, 0.0143, 0.0121),
@@ -143,7 +163,7 @@ SiStripSimBlock = cms.PSet(
 #    CouplingConstantRunIIDecW5  = cms.vdouble(0.8796, 0.0371, 0.0231),
 #    CouplingConstantRunIIDecW6  = cms.vdouble(0.8873, 0.0365, 0.0198),
 #    CouplingConstantRunIIDecW7  = cms.vdouble(0.8671, 0.0493, 0.0171),
-    #TEC---Down x0 10% x2 unchanged
+    #TEC---Down x0 10% x2 const
 #    CouplingConstantRunIIDecW1b = cms.vdouble(0.7944, 0.0960, 0.0068),
 #    CouplingConstantRunIIDecW2b = cms.vdouble(0.8048, 0.0930, 0.0046),
 #    CouplingConstantRunIIDecW3b = cms.vdouble(0.7749, 0.1004, 0.0121),
@@ -160,14 +180,29 @@ SiStripSimBlock = cms.PSet(
 #    CouplingConstantRunIIDecW6  = cms.vdouble(0.7914, 0.0845, 0.0198),
 #    CouplingConstantRunIIDecW7  = cms.vdouble(0.7706, 0.0976, 0.0171),
 #    #TEC---Down x1 10% x2 const
-
-#    CouplingConstantRunIIDecW1b = cms.vdouble(0.8932, 0.0466, 0.0068),
-#    CouplingConstantRunIIDecW2b = cms.vdouble(0.9040, 0.0434, 0.0046),
-#    CouplingConstantRunIIDecW3b = cms.vdouble(0.8728, 0.0515, 0.0121),
-#    CouplingConstantRunIIDecW4  = cms.vdouble(0.8992, 0.0489, 0.0015),
-#    CouplingConstantRunIIDecW5  = cms.vdouble(0.8152, 0.0693, 0.0231),
-#    CouplingConstantRunIIDecW6  = cms.vdouble(0.8220, 0.0692, 0.0198),
-#    CouplingConstantRunIIDecW7  = cms.vdouble(0.8060, 0.0799, 0.0171),
+    # CouplingConstantRunIIDecW1b = cms.vdouble(0.8932, 0.0466, 0.0068),
+    # CouplingConstantRunIIDecW2b = cms.vdouble(0.9040, 0.0434, 0.0046),
+    # CouplingConstantRunIIDecW3b = cms.vdouble(0.8728, 0.0515, 0.0121),
+    # CouplingConstantRunIIDecW4  = cms.vdouble(0.8992, 0.0489, 0.0015),
+    # CouplingConstantRunIIDecW5  = cms.vdouble(0.8152, 0.0693, 0.0231),
+    # CouplingConstantRunIIDecW6  = cms.vdouble(0.8220, 0.0692, 0.0198),
+    # CouplingConstantRunIIDecW7  = cms.vdouble(0.8060, 0.0799, 0.0171),
+    #TEC---Up x1 10% x0 const
+   CouplingConstantRunIIDecW1b = cms.vdouble(0.8827, 0.0569, 0.0017),
+   CouplingConstantRunIIDecW2b = cms.vdouble(0.8943, 0.0531, -0.0002),
+   CouplingConstantRunIIDecW3b = cms.vdouble(0.8611, 0.0630, 0.0064),
+   CouplingConstantRunIIDecW4  = cms.vdouble(0.8881, 0.0598, -0.0038),
+   CouplingConstantRunIIDecW5  = cms.vdouble(0.7997, 0.0847, 0.0154),
+   CouplingConstantRunIIDecW6  = cms.vdouble(0.8067, 0.0845, 0.0121),
+   CouplingConstantRunIIDecW7  = cms.vdouble(0.7883, 0.0976, 0.0082),
+#    #TEC---Down x1 10% x0 const
+    CouplingConstantRunIIDecW1b = cms.vdouble(0.8827, 0.0466, 0.0120),
+    CouplingConstantRunIIDecW2b = cms.vdouble(0.8943, 0.0434, 0.0084),
+    CouplingConstantRunIIDecW3b = cms.vdouble(0.8611, 0.0515, 0.0179),
+    CouplingConstantRunIIDecW4  = cms.vdouble(0.8881, 0.0489, 0.0070),
+    CouplingConstantRunIIDecW5  = cms.vdouble(0.7997, 0.0693, 0.0308),
+    CouplingConstantRunIIDecW6  = cms.vdouble(0.8067, 0.0692, 0.0274),
+    CouplingConstantRunIIDecW7  = cms.vdouble(0.7883, 0.0799, 0.0259),
 #
 #    #TEC---Up x2 10% x1 const
 #    CouplingConstantRunIIDecW1b = cms.vdouble(0.8816, 0.0518, 0.0074),
@@ -178,7 +213,7 @@ SiStripSimBlock = cms.PSet(
 #    CouplingConstantRunIIDecW6  = cms.vdouble(0.8028, 0.0769, 0.0217),
 #    CouplingConstantRunIIDecW7  = cms.vdouble(0.7848, 0.0888, 0.0188),
 #
-#    #TEC---Down x2 10% x1 const
+#    #TEC---Up x2 10% x1 const
 #    CouplingConstantRunIIDecW1b = cms.vdouble(0.8842, 0.0518, 0.0061),
 #    CouplingConstantRunIIDecW2b = cms.vdouble(0.8952, 0.0483, 0.0041),
 #    CouplingConstantRunIIDecW3b = cms.vdouble(0.8638, 0.0573, 0.0108),
@@ -186,14 +221,14 @@ SiStripSimBlock = cms.PSet(
 #    CouplingConstantRunIIDecW5  = cms.vdouble(0.8046, 0.0770, 0.0207),
 #    CouplingConstantRunIIDecW6  = cms.vdouble(0.8106, 0.0769, 0.0178),
 #    CouplingConstantRunIIDecW7  = cms.vdouble(0.7918, 0.0888, 0.0153),
-    #TEC default
-    CouplingConstantRunIIDecW1b = cms.vdouble(0.8827, 0.0518, 0.0068),
-    CouplingConstantRunIIDecW2b = cms.vdouble(0.8943, 0.0483, 0.0046),
-    CouplingConstantRunIIDecW3b = cms.vdouble(0.8611, 0.0573, 0.0121),
-    CouplingConstantRunIIDecW4  = cms.vdouble(0.8881, 0.0544, 0.0015),
-    CouplingConstantRunIIDecW5  = cms.vdouble(0.7997, 0.077, 0.0231),
-    CouplingConstantRunIIDecW6  = cms.vdouble(0.8067, 0.0769, 0.0198),
-    CouplingConstantRunIIDecW7  = cms.vdouble(0.7883, 0.0888, 0.0171),
+#    #TEC
+#    CouplingConstantRunIIDecW1b = cms.vdouble(0.8827, 0.0518, 0.0068),
+#    CouplingConstantRunIIDecW2b = cms.vdouble(0.8943, 0.0483, 0.0046),
+#    CouplingConstantRunIIDecW3b = cms.vdouble(0.8611, 0.0573, 0.0121),
+#    CouplingConstantRunIIDecW4  = cms.vdouble(0.8881, 0.0544, 0.0015),
+#    CouplingConstantRunIIDecW5  = cms.vdouble(0.7997, 0.077, 0.0231),
+#    CouplingConstantRunIIDecW6  = cms.vdouble(0.8067, 0.0769, 0.0198),
+#    CouplingConstantRunIIDecW7  = cms.vdouble(0.7883, 0.0888, 0.0171),
 
     #-----SiStripDigitizer
     DigiModeList = cms.PSet(SCDigi = cms.string('ScopeMode'),
